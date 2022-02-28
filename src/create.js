@@ -1,14 +1,12 @@
 import * as uuid from 'uuid';
-import AWS from 'aws-sdk';
+import handler from './util/handler';
+import dynamoDb from './util/dynamodb';
 
-const dynamoDB = new AWS.DynamoDB.DocumentClient();
-
-export async function main(event) {
-  // Request body is passed in as a JSON encoded string in 'event.body'
+export const main = handler(async (event) => {
   const data = JSON.parse(event.body);
 
   const params = {
-    TableName: process.end.TABLE_NAME,
+    TableName: process.env.TABLE_NAME,
     Item: {
       // The attributes of the item to be created
       userId: '123',
@@ -19,17 +17,7 @@ export async function main(event) {
     }
   };
 
-  try {
-    await dynamoDB.put(params).promise();
+  await dynamoDb.put(params).promise();
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify(params.item),
-    };
-  } catch (e) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: e.message }),
-    }
-  }
-}
+  return params.Item;
+})
