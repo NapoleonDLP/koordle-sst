@@ -1,4 +1,4 @@
-import * from sst from '@serverless-stack/resources';
+import * as sst from '@serverless-stack/resources';
 
 export default class StorageStack extends sst.Stack {
   // Public reference to the table
