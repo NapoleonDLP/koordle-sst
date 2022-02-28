@@ -15,7 +15,8 @@ export default class ApiStack extends sst.Stack {
         },
       },
       routes: {
-        'POST /games': 'src/create.main'
+        'POST /games': 'src/create.main',
+        'GET /new-word': 'src/getNewWord.main',
       },
     });
     // Allow the APi to access the table
